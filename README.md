@@ -9,15 +9,20 @@ been dispatched. Couriers have to wait at the kitchen if the order they are pick
 not ready.
 Once an order is picked up by a courier it is instantaneously delivered. The system contains 2
 courier dispatch strategies:
+
 ● Matched: a courier is dispatched for a specific order and may only pick up that
 order
+
 ● First-in-first-out: a courier picks up the next available order upon arrival.
+
 If there are multiple orders available, the courier picks up an arbitrary order.
 If there are no available orders, couriers wait for the next available one. When 
 there are multiple couriers waiting, the next available order is assigned to the 
 earliest arrived courier. Statistics are printed each time an order is picked up. After the system
 has finished processing all orders, an average of each of the statistics are printed, which includes:
+
 ● Average food wait time (milliseconds) between order ready and pickup
+
 ● Average courier wait time (milliseconds) between arrival and order pickup
 
 In Designing the system, 3 patterns were :
