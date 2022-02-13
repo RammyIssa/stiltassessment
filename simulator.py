@@ -43,17 +43,27 @@ class Simulator():
     async def place_order(self, order: OrderDict) -> None:
         #sleep then add order to queue
         self.cli.loop.create_task(self.cli.place_order(order))
-        await asyncio.sleep(order["prepTime"])
+
+        try:
+            await asyncio.sleep(order["prepTime"])
+        except KeyError:
+            return            
+
         self.cli.loop.create_task(self.cli.order_ready_for_pickup(order))
 
+
     async def order_food_and_dispatch_courier(self, order: OrderDict) -> None:
-        self.cli.loop.create_task(self.place_order(order))
-        self.cli.loop.create_task(self.dispatch_courier(order))
-        self.cli.loop.create_task(self.pickup_order(order))
+        if await self.cli.check_fields(order):
+            self.cli.loop.create_task(self.place_order(order))
+            self.cli.loop.create_task(self.dispatch_courier(order))
+            self.cli.loop.create_task(self.pickup_order(order))
 
     async def pickup_order(self, order: OrderDict) -> None:
-        order_is_ready = await self.cli.orderqueue.order_ready(order["id"])
-        courier_has_arrived = await self.cli.courierqueue.courier_arrived(order["id"])
+        try:
+            order_is_ready = await self.cli.orderqueue.order_ready(order["id"])
+            courier_has_arrived = await self.cli.courierqueue.courier_arrived(order["id"])
+        except KeyError:
+            return
         
         if order_is_ready and courier_has_arrived and self.fifo_pickup_request_count < 1:
             if self.strategy == StrategyEnum.FIFO.value:

@@ -28,20 +28,31 @@ class ConsolePrinter():
 
     async def print_order_placed(self, order: OrderDict) -> None:
         curr_time = await self.return_formatted_curr_time()
-        print("%s - Order Placed:  \t%s - %s"% (curr_time, order["id"], order["name"]))
-
+        try:
+            print("%s - Order Placed:  \t%s - %s"% (curr_time, order["id"], order["name"]))
+        except KeyError:
+            return
     async def print_order_prepped(self, order: OrderDict) -> None:
         curr_time = await self.return_formatted_curr_time()
-        print("%s - Order Prepped:  \t%s - %s"% (curr_time, order["id"], order["name"]))
+        try:
+            print("%s - Order Prepped:  \t%s - %s"% (curr_time, order["id"], order["name"]))
+        except KeyError:
+            return
 
     async def print_courier_dispatched(self, order: OrderDict) -> None:
         curr_time = await self.return_formatted_curr_time()
-        print("%s - Courier Dispatched: \t%s " % (curr_time,order["id"]))
+        try:
+            print("%s - Courier Dispatched: \t%s " % (curr_time,order["id"]))
+        except KeyError:
+            return
 
     async def print_courier_arrived(self, order: OrderDict) -> None:
         curr_time = await self.return_formatted_curr_time()
-        print("%s - Courier Arrived: \t%s "% (curr_time,order["id"]))
-
+        try:
+            print("%s - Courier Arrived: \t%s "% (curr_time,order["id"]))
+        except KeyError:
+            return
+            
     async def print_exception(self, e: Exception) -> None:
         print(e)
 

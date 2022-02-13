@@ -11,8 +11,23 @@ temp_order: OrderDict = {
         "name": "Pressed Juice", 
         "prepTime": temp_prepTime
     }
-    
+temp_bad_order: OrderDict = {
+        "wrongid": "5bd1e697-10b2-48cf-83c4-033eea97bfb2", 
+        "wrongname": "Pressed Juice", 
+        "wrongprepTime": temp_prepTime    
+}
 temp_cli = Cli(StrategyEnum.Matched.value)
+
+@pytest.mark.asyncio
+async def test_check_fields(capsys) -> None:
+    global temp_order, temp_cli, temp_bad_order
+
+    assert await temp_cli.check_fields(temp_order) == True  
+
+    await temp_cli.check_fields(temp_bad_order)
+    await asyncio.sleep(1)
+    captured = capsys.readouterr()
+    assert "Incorrect fields" in captured.out
 
 @pytest.mark.asyncio
 async def test_dispatch_courier(capsys) -> None:

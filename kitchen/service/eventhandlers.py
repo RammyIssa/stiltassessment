@@ -29,7 +29,11 @@ class Handlers():
         await Handlers.consoleprinter.print_courier_arrived(order)
 
     async def pickup_order(order: OrderDict)-> None:
-        orderid = order['id']    
+        try:
+            orderid = order['id']
+        except KeyError:
+            return
+
         order_from_queue = await Handlers.orderqueue.remove_order(orderid)
         courier_from_queue = await Handlers.courierqueue.remove_courier(orderid)
         await Handlers.consoleprinter.print_order_stat(

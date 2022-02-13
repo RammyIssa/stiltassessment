@@ -11,9 +11,12 @@ class OrderDict(TypedDict):
 
 class Order():
     def __init__(self, order: OrderDict):
-        self.orderid: str = order['id']
-        self.name: str = order['name']
-        self.preptime: int = order['prepTime']
+        try:
+            self.orderid: str = order['id']
+            self.name: str = order['name']
+            self.preptime: int = order['prepTime']
+        except KeyError:
+            return
 
 
 class OrderData():
@@ -29,7 +32,10 @@ class OrderData():
 
 class Courier():
     def __init__(self, order: OrderDict):
-        self.orderid: str = order['id']
+        try:
+            self.orderid: str = order['id']
+        except KeyError:
+            return
 
 
 class CourierData():
