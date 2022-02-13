@@ -17,7 +17,9 @@ If there are no available orders, couriers wait for the next available one. When
 there are multiple couriers waiting, the next available order is assigned to the 
 earliest arrived courier. Statistics are printed each time an order is picked up. After the system
 has finished processing all orders, an average of each of the statistics are printed, which includes:
+
 ● Average food wait time (milliseconds) between order ready and pickup
+
 ● Average courier wait time (milliseconds) between arrival and order pickup
 
 In Designing the system, 3 patterns were :
