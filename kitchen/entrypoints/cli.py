@@ -1,6 +1,6 @@
 import asyncio
-from collections import deque
 
+from collections import deque
 from kitchen.service.bus import EventBus
 from kitchen.service.eventhandlers import Handlers
 from kitchen.domain.queue import CourierQueue, OrderQueue
