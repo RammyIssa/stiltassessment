@@ -1,5 +1,5 @@
 FROM python:3
-copy . /stiltassessment
+COPY . /stiltassessment
 WORKDIR /stiltassessment
-CMD pip install -r requirements.txt
+CMD pip3 install -r requirements.txt
 CMD python simulator.py
