@@ -81,6 +81,7 @@ async def test_pickup_order(capsys) -> None:
     assert temp_order["id"] in captured.out
 
 # Ensures finish_cli() communicates averages to the outisde world.
+@pytest.mark.asyncio
 async def test_finish_cli(capsys) -> None:
     global temp_order, temp_cli    
     temp_cli.finish_cli()
