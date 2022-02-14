@@ -8,6 +8,7 @@ order = {
     "prepTime": 1
 }
 
+# Ensure update_time_order_prepped() updates time of order object
 @pytest.mark.asyncio
 async def test_update_time_order_prepped() -> None:
     temp_order = Order(order)
@@ -15,6 +16,7 @@ async def test_update_time_order_prepped() -> None:
     await temp_order_data.update_time_order_prepped()
     assert temp_order_data.timeorderprepped > 0.0
 
+# Ensure update_time_courier_arrived() updates time of courier object
 @pytest.mark.asyncio
 async def test_update_time_courier_arrived() -> None:
     temp_order = Courier(order)

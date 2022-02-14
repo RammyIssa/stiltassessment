@@ -11,6 +11,9 @@ temp_order: OrderDict = {
     
 temp_console_printer = ConsolePrinter()
 
+# Tests to ensure adapter is working and outside world has 
+#                               visibility to system operations.
+
 @pytest.mark.asyncio
 async def test_print_order_placed(capsys) -> None:
     await temp_console_printer.print_order_placed(temp_order)
