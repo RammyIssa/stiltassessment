@@ -62,7 +62,7 @@ When developing parts of the system, it’s important to know what each componen
 ## Design Decisions:
 The system was created to run asynchronously. The Kitchen places an order and must wait for the food to cook (Similar to waiting for IO). The time it takes to cook this food shouldn't be spent looking at the food and waiting for it to cook, it should be spent on other tasks like taking other orders, dispatching couriers, checking if a courier's order is ready so he/she can pick it up! Python's Asyncio IO package was used so multiple tasks can run concurrently while other tasks are waiting. The event bus was implemented to notify the system and add necessary tasks. There are multiple tasks that are running, and if one of those tasks are completed, the system should be notified.
 
-The simulator runs handles all the prep time and waiting for the courier to arrive. It did not feel right to put to have the entry points sleep, the simulator seemed like the logical solution to handle the sleep. The entry points should just handle the tasks that are given.
+The simulator handles all the prep time and wait for the courier to arrive before sending an event to the system. It did not feel right to have the entry points sleep, the simulator seemed like the logical solution to handle the sleep. The entry points should just handle the tasks that are given.
 
 
 
