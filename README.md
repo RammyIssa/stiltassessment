@@ -28,7 +28,7 @@ has finished processing all orders, an average of each of the statistics are pri
 # Install and Run
 There are 2 different ways to run the application, pulling the container from docker, or cloning the repo and running it locally.
 
-## Docker install and run (copy and paste steps 1-3 in shell)
+## Docker install and run
 1. docker run -it rammyissa/code-challenge:stiltAssessmentContainer bash -c "glow -p README.md && bash"
 2. Go through readme by hitting Enter. To exit README, simply press `q` 
 3. Now you can run the application, type "python3 simulator.py" and press enter
