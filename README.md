@@ -45,24 +45,90 @@ There are 2 different ways to run the application, pulling the container from do
 5. Read directions of prompt and enter 1 for FIFO or 2 for matched and press enter to start program, enter any other number to exit program. 
 6. Once program is exited and you want to run tests, type "python -m pytest" and press enter
 
-## In Designing the system, 3 patterns were :
+# Entry Points to the system:
+### def place_order(order)
+#### Description:
+Receives order and Informs outside world that the order was placed..
+#### args:
+order: {
+    id: "ID of order",
+    name: "description of order"
+    prepTime: "integer value representing the number of seconds to prep the food"
+}
+#### Returns:
+None
+
+### def def dispatch_courier(order)
+#### Description:
+Dispatches courier for an order and Informs outside world that the courier was dispatched.
+#### args:
+order: {
+    id: "ID of order",
+    name: "description of order"
+    prepTime: "integer value representing the number of seconds to prep the food"
+}
+#### Returns:
+None
+
+### def order_ready_for_pickup(order)
+#### Description:
+Places order in pickup queue so it can be delivered by courier. Informs outside world that the order was prepped and is ready.
+#### args:
+order: {
+    id: "ID of order",
+    name: "description of order"
+    prepTime: "integer value representing the number of seconds to prep the food"
+}
+#### Returns:
+None
+
+### def courier_ready_for_pickup(order)
+#### Description:
+Places courier in pickup queue so courier can pickup order if ready. Informs outside world that the courier has arrived to pickup order.
+#### args:
+order: {
+    id: "ID of order",
+    name: "description of order"
+    prepTime: "integer value representing the number of seconds to prep the food"
+}
+#### Returns:
+None
+
+### def pickup_order(order)
+#### Description:
+Delivers order and removes order and courier from their queues. Informs outside world that the order was pickup by the courier, and statistics of waiting times for food and courier.
+#### args:
+order: {
+    id: "ID of order",
+    name: "description of order"
+    prepTime: "integer value representing the number of seconds to prep the food"
+}
+#### Returns:
+None
+
+### def finish_cli()
+#### Description:
+Informs outside world of average food and courier wait times.
+
+
+## In Designing the system, 3 patterns were used:
 ### 1. Domain Driven Design 
 ### 2. Event Driven Architecture
 ### 3. Test Driven Design
 
 ## Domain Driven Design(DDD): 
-DDD is useful when tackling a complex problem. When a system has many moving parts, its sometimes advantageous to separate the system into each of their categories. The system was separated into 4 components. We have the service, which consists of the event bus and the event handlers(More on this in Event Driven Architecture, below). When an order is made, or an order is ready, or a courier needs to be dispatched, or an order is ready for pickup, we emit this event to the bus, where the handlers for those events are listening. The handlers provide the service and means to which our system operates but other parts of the system don't need to be involved with the services that are provided. We also have the adapter, which provides the system a means to communicate with the outside world and allows the system to display the System's current actions. Additionally, we have the domain layer, which contains the business logic, this is where couriers are added to the waiting queue, or where orders are added to the waiting queue. This is where checking if an order is prepared or if a courier has arrived is done. And lastly, we have the entry points to the system. This is the API, where we can communicate with the system.
+DDD is useful when tackling a complex problem. When a system has many moving parts, it can beadvantageous to separate the system into each of their categories. The system was separated into 4 components. We have the service, which consists of the event bus and the event handlers(More on this in Event Driven Architecture, below). These services handle the components of sending events when triggered to and handling those events. When an order is made, or an order is ready, or a courier needs to be dispatched, or an order is ready for pickup, we emit those event to the bus, where the handlers for those events are listening and take the appropriate action. The handlers provide the service and means to which our system operates but other parts of the system don't need to be involved with the services that are provided. We also have the adapter, which provides the system a means to communicate with the outside world and allows the system to display the System's current actions. Additionally, we have the domain layer, which contains the business logic, this is where couriers are added to the waiting queue, or where orders are added to the waiting queue. This is where checking if an order is prepared or if a courier has arrived is done. And lastly, we have the entry points to the system. This is the API, where we can communicate with the system. This is where data is given to the system and the sytem will handle the request.
 
 ## Event Driven Architecture(EDA): 
-This system relies on notifications or events. When an order is being placed, send an Event! When an order is ready, send an event! When a courier has arrived for an order, SEND AN EVENT! The system relies on this Architecture which helps decouple different parts of the system. The system only reacts to the events. The system revolves around a courier arriving, or an order being prepped, or an order being placed, and so on. The system reacts to these events and is notified so it can take the appropriate action.
+This system relies on notifications or events. When an order is being placed, send an Event! When an order is ready, send an event! When a courier has arrived for an order, SEND AN EVENT! The system relies on this Architecture which helps decouple parts of the system. The system only reacts to the events. The system revolves around a courier arriving, or an order being prepped, or an order being placed, and so on. The system reacts to these events and takes the appropriate action.
 
 ## Test Driven Development(TDD): 
-When developing parts of the system, it’s important to know what each component should do. Using TDD can help ensure each domain stays on its original course and ensure each component functions correctly.
+When developing parts of the system, it’s important to know what each component should do. Using TDD can help ensure each domain stays on its original course and ensure each component functions correctly. The system has clear defined set of expected inputs and outputs. When an order is placed a courier should be dispatched and the outside world should have visibility to the system's actions.
 
 ## Design Decisions:
-The system was created to run asynchronously. The Kitchen places an order and must wait for the food to cook (Similar to waiting for IO). The time it takes to cook this food shouldn't be spent looking at the food and waiting for it to cook, it should be spent on other tasks like taking other orders, dispatching couriers, checking if a courier's order is ready so he/she can pick it up! Python's Asyncio IO package was used so multiple tasks can run concurrently while other tasks are waiting. The event bus was implemented to notify the system and add necessary tasks. There are multiple tasks that are running, and if one of those tasks are completed, the system should be notified.
+The system was created to run asynchronously. The Kitchen places an order and must wait for the food to cook (Similar to waiting for IO). The time it takes to cook this food shouldn't be spent looking at the food and waiting for it to cook, it should be spent on other tasks like taking other orders, dispatching couriers, checking if a courier's order is ready so he/she can pick it up! Python's Asyncio IO package was used so multiple tasks can run concurrently while other tasks are waiting. The event bus was implemented to add multiple tasks so system can execute these tasks in appropriate order. There are multiple tasks that are running, and if one of those tasks are completed, the system should be notified so it can take the next appropriate action.
 
-The simulator handles all the prep time and wait for the courier to arrive before sending an event to the system. It did not feel right to have the entry points sleep, the simulator seemed like the logical solution to handle the sleep. The entry points should just handle the tasks that are given.
+The simulator handles all the prep time: waiting for food to be prepped or waiting for the courier to arrive. It did not feel right to have the entry points sleep when it receives these requests, the simulator seemed like the logical solution to handle the sleep. The entry points should just handle the order it receives.
 
 
 
