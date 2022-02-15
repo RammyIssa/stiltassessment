@@ -29,18 +29,19 @@ has finished processing all orders, an average of each of the statistics are pri
 There are 2 different ways to run the application, pulling the container from docker, or cloning the repo and running it locally.
 
 ## Docker install and run (copy and paste steps 1-3 in shell)
-1. docker run -it rammyissa/code-challenge:stiltAssessmentContainer bash -c "glow README.md && bash"
-2. Type "python simulator.py" and press enter
+1. docker run -it rammyissa/code-challenge:stiltAssessmentContainer bash -c "glow -p README.md && bash"
+2. Go through readme by hitting Enter. To exit README, simply press `q` 
+3. Now you can run the application, type "python simulator.py" and press enter
 3. Read directions of prompt and enter 1 for FIFO or 2 for matched and press enter to start program, enter any other number to exit program. 
 4. Once program is exited and you want to run tests, type "python -m pytest" and press enter
 
 ## Gibhub clone and run locally
 1. git clone https://github.com/RammyIssa/stiltassessment.git
 2. cd into main directory '/stiltassessment'
-3. Create virtual environment with conda or venv
-4. Activate virtual environment
+3. create virtual environment with venv or conda
+4. activate virtual environment
 5. pip3 install -r requirements.txt
-6. Run application with 'python3 simulator.py'
+6. run application with 'python3 simulator.py'
 7. Read directions of prompt and enter 1 for FIFO or 2 for matched and press enter to start program, enter any other number to exit program. 
 8. Once program is exited and you want to run tests, type "python -m pytest" and press enter
 
