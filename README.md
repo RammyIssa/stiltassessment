@@ -1,4 +1,4 @@
-# stilt_assessment
+# stiltassessment
 This project is a real-time system that fulfills delivery orders for a kitchen.
 The Simulation receives 2 delivery orders per second from the dispatch_orders.json file. Each order
 takes some time (defined as `prepTime` in order JSON) to be prepared. Once an order
@@ -52,19 +52,19 @@ Receives order and Informs outside world that the order was placed..
 #### args:
 order: {
     id: "ID of order",
-    name: "description of order"
+    name: "description of order",
     prepTime: "integer value representing the number of seconds to prep the food"
 }
 #### Returns:
 None
 
-### def def dispatch_courier(order)
+### def dispatch_courier(order)
 #### Description:
 Dispatches courier for an order and Informs outside world that the courier was dispatched.
 #### args:
 order: {
     id: "ID of order",
-    name: "description of order"
+    name: "description of order",
     prepTime: "integer value representing the number of seconds to prep the food"
 }
 #### Returns:
@@ -76,7 +76,7 @@ Places order in pickup queue so it can be delivered by courier. Informs outside 
 #### args:
 order: {
     id: "ID of order",
-    name: "description of order"
+    name: "description of order",
     prepTime: "integer value representing the number of seconds to prep the food"
 }
 #### Returns:
@@ -88,7 +88,7 @@ Places courier in pickup queue so courier can pickup order if ready. Informs out
 #### args:
 order: {
     id: "ID of order",
-    name: "description of order"
+    name: "description of order",
     prepTime: "integer value representing the number of seconds to prep the food"
 }
 #### Returns:
@@ -100,7 +100,7 @@ Delivers order and removes order and courier from their queues. Informs outside 
 #### args:
 order: {
     id: "ID of order",
-    name: "description of order"
+    name: "description of order",
     prepTime: "integer value representing the number of seconds to prep the food"
 }
 #### Returns:
